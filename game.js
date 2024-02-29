@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
   const player = document.getElementById('player');
-  const obstacles = document.querySelectorAll('.obstacle');
+  const gameBackground = document.getElementById('game-background');
+  const gameForeground = document.getElementById('game-foreground');
   const orbs = document.querySelectorAll('.orb');
   let additionalJumps = 0; // Track additional jumps
   let isJumping = false; // Track player jumping state
+  let gameSpeed = 2; // Adjust game speed
+  let gameWidth = 2000; // Adjust game width
+  let obstacleOffset = 200; // Adjust distance between orbs and obstacles
 
   // Add event listener for left mouse click to jump
   document.addEventListener('click', function(event) {
@@ -24,41 +28,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 300);
   }
 
-  // Check for collisions with obstacles
-  setInterval(function() {
-    obstacles.forEach(function(obstacle) {
-      if (isColliding(player, obstacle)) {
-        gameOver();
-      }
-    });
-  }, 100);
+  // Move game foreground (player and orbs)
+  function moveForeground() {
+    gameForeground.style.left = parseInt(gameForeground.style.left || 0) - gameSpeed + 'px';
+    requestAnimationFrame(moveForeground);
+  }
 
-  // Check for collisions with orbs
-  setInterval(function() {
+  // Start game
+  function startGame() {
+    requestAnimationFrame(moveForeground);
+    spawnObstacles();
+  }
+
+  // Spawn obstacles near orbs
+  function spawnObstacles() {
     orbs.forEach(function(orb) {
-      if (isColliding(player, orb)) {
-        collectOrb(orb);
-      }
+      const obstacle = document.createElement('div');
+      obstacle.classList.add('obstacle');
+      obstacle.style.bottom = '100px'; // Adjust obstacle height as needed
+      obstacle.style.left = (parseInt(orb.style.left) + obstacleOffset) + 'px';
+      gameForeground.appendChild(obstacle);
     });
-  }, 100);
-
-  function collectOrb(orb) {
-    orb.style.display = 'none'; // Hide collected orb
-    additionalJumps++; // Grant additional jump
   }
 
-  function isColliding(player, object) {
-    const playerRect = player.getBoundingClientRect();
-    const objectRect = object.getBoundingClientRect();
-    return !(
-      playerRect.bottom < objectRect.top ||
-      playerRect.top > objectRect.bottom ||
-      playerRect.right < objectRect.left ||
-      playerRect.left > objectRect.right
-    );
-  }
-
-  function gameOver() {
-    alert('Game Over!'); // You can implement more advanced game over logic here
-  }
+  // Start the game when everything is loaded
+  startGame();
 });

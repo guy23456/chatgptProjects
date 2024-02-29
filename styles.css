@@ -27,20 +27,61 @@ body, html {
   height: 50px;
   background-color: #ff0000;
   position: absolute;
-  bottom: 0;
-  animation: moveObstacle 3s linear infinite;
 }
 
-@keyframes moveObstacle {
-  from {
-    left: 100%;
-  }
-  to {
-    left: 0;
-  }
+.orb {
+  width: 20px;
+  height: 20px;
+  background-color: #00ff00;
+  position: absolute;
+}
+
+#obstacle1 {
+  bottom: 0;
+  left: 200px;
 }
 
 #obstacle2 {
+  bottom: 0;
+  left: 400px;
+}
+
+#obstacle3 {
+  bottom: 50px;
+  left: 600px;
+}
+
+#obstacle4 {
   bottom: 100px;
-  animation-delay: 1.5s; /* Delay for obstacle 2 */
+  left: 800px;
+}
+
+#obstacle5 {
+  bottom: 150px;
+  left: 1000px;
+}
+
+#obstacle6 {
+  bottom: 0;
+  left: 1200px;
+}
+
+#orb1 {
+  bottom: 100px;
+  left: 300px;
+}
+
+#orb2 {
+  bottom: 200px;
+  left: 700px;
+}
+
+#orb3 {
+  bottom: 0;
+  left: 900px;
+}
+
+#orb4 {
+  bottom: 150px;
+  left: 1100px;
 }

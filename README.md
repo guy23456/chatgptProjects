@@ -1,6 +1,4 @@
-# chatgptProjects
-A repository dedicated to making stupid projects with ChatGPT. All of these projects are open-source and free to use without permission. Check individual branches for each project.
+# deometry gash
 
-DISCLAIMER: Anything you do with these projects is not the responsibility of the creator. By downloading even 1 file from this repository you agree that you take full responsibility for your actions with these projects.
-
+Deometry Gash is a knockoff version of Geometry Dash by RobTop Games, and was created with ChatGPT. These files are intended to be hosted on a website, but no website is provided by default. This project will not be updated, like the other projects in this repo.
 

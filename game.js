@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   function jump() {
-    player.style.bottom = '200px'; // Adjust jump height as needed
+    player.style.bottom = '100px'; // Adjust jump height as needed
     setTimeout(function () {
       player.style.bottom = '0';
     }, 300);

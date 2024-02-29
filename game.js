@@ -1,10 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
   const player = document.getElementById('player');
   const obstacles = document.querySelectorAll('.obstacle');
+  const orbs = document.querySelectorAll('.orb');
+  let additionalJumps = 0; // Track additional jumps
 
-  // Add event listener for space key to jump
-  document.addEventListener('keydown', function(event) {
-    if (event.code === 'Space') {
+  // Add event listener for left mouse click to jump
+  document.addEventListener('click', function(event) {
+    // Check for collision with orbs only when clicking the mouse
+    orbs.forEach(function(orb) {
+      if (isColliding(player, orb)) {
+        collectOrb(orb);
+      }
+    });
+
+    if (additionalJumps > 0) {
+      jump();
+      additionalJumps--;
+    }
+    else {
       jump();
     }
   });
@@ -25,14 +38,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }, 100);
 
-  function isColliding(player, obstacle) {
+  function collectOrb(orb) {
+    additionalJumps++; // Grant additional jump
+  }
+
+  function isColliding(player, object) {
     const playerRect = player.getBoundingClientRect();
-    const obstacleRect = obstacle.getBoundingClientRect();
+    const objectRect = object.getBoundingClientRect();
     return !(
-      playerRect.bottom < obstacleRect.top ||
-      playerRect.top > obstacleRect.bottom ||
-      playerRect.right < obstacleRect.left ||
-      playerRect.left > obstacleRect.right
+      playerRect.bottom < objectRect.top ||
+      playerRect.top > objectRect.bottom ||
+      playerRect.right < objectRect.left ||
+      playerRect.left > objectRect.right
     );
   }
 

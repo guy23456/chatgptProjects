@@ -3,29 +3,24 @@ document.addEventListener('DOMContentLoaded', function () {
   const obstacles = document.querySelectorAll('.obstacle');
   const orbs = document.querySelectorAll('.orb');
   let additionalJumps = 0; // Track additional jumps
+  let isJumping = false; // Track player jumping state
 
   // Add event listener for left mouse click to jump
   document.addEventListener('click', function(event) {
-    // Check for collision with orbs only when clicking the mouse
-    orbs.forEach(function(orb) {
-      if (isColliding(player, orb)) {
-        collectOrb(orb);
+    if (additionalJumps > 0 || !isJumping) {
+      jump();
+      if (additionalJumps > 0) {
+        additionalJumps--;
       }
-    });
-
-    if (additionalJumps > 0) {
-      jump();
-      additionalJumps--;
-    }
-    else {
-      jump();
     }
   });
 
   function jump() {
-    player.style.bottom = '100px'; // Adjust jump height as needed
+    isJumping = true; // Set jumping state to true
+    player.style.bottom = '200px'; // Adjust jump height as needed
     setTimeout(function () {
       player.style.bottom = '0';
+      isJumping = false; // Reset jumping state when the jump is complete
     }, 300);
   }
 
@@ -38,7 +33,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }, 100);
 
+  // Check for collisions with orbs
+  setInterval(function() {
+    orbs.forEach(function(orb) {
+      if (isColliding(player, orb)) {
+        collectOrb(orb);
+      }
+    });
+  }, 100);
+
   function collectOrb(orb) {
+    orb.style.display = 'none'; // Hide collected orb
     additionalJumps++; // Grant additional jump
   }
 
